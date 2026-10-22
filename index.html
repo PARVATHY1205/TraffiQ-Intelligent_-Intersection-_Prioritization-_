@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraffiQ - Intelligent Intersection Prioritization</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="app-header">
+        <div class="logo-container">
+            <div class="traffic-light-icon">
+                <span class="light red"></span>
+                <span class="light yellow"></span>
+                <span class="light green"></span>
+            </div>
+            <div>
+                <h1>TraffiQ</h1>
+                <p>Intelligent Intersection & Emergency Queue System | Roll No: 34</p>
+            </div>
+        </div>
+        <div class="header-stats">
+            <div class="stat-badge"><span class="stat-label">Active Signal:</span> <strong id="activeSignalDisplay">NORTH</strong></div>
+            <div class="stat-badge"><span class="stat-label">Emergency Cleared:</span> <strong id="emergencyClearedCount">0</strong></div>
+            <div class="stat-badge"><span class="stat-label">Regular Cleared:</span> <strong id="regularClearedCount">0</strong></div>
+        </div>
+    </header>
+
+    <main class="dashboard-grid">
+        <!-- Control Panel -->
+        <section class="card control-panel">
+            <h2>⚙️ System Operations</h2>
+            <form id="vehicleForm" class="form-grid">
+                <div class="form-group">
+                    <label for="licensePlate">License Plate</label>
+                    <input type="text" id="licensePlate" placeholder="e.g. KL-07-BN-4321" required pattern="[A-Za-z0-9\-]+">
+                </div>
+                
+                <div class="form-group">
+                    <label for="vehicleType">Vehicle Priority Category</label>
+                    <select id="vehicleType" required>
+                        <option value="EMERGENCY_AMBULANCE">🚨 Emergency: Ambulance (Priority 1)</option>
+                        <option value="EMERGENCY_FIRE">🚒 Emergency: Fire Engine (Priority 2)</option>
+                        <option value="EMERGENCY_POLICE">🚓 Emergency: Police (Priority 3)</option>
+                        <option value="REGULAR_BUS">🚌 Regular: Public Bus (Priority 4)</option>
+                        <option value="REGULAR_CAR" selected>🚗 Regular: Private Car (Priority 5)</option>
+                        <option value="REGULAR_BIKE">🏍️ Regular: Motorcycle (Priority 6)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="laneSelect">Lane Entry</label>
+                    <select id="laneSelect" required>
+                        <option value="NORTH">⬆️ North Lane</option>
+                        <option value="EAST">➡️ East Lane</option>
+                        <option value="SOUTH">⬇️ South Lane</option>
+                        <option value="WEST">⬅️ West Lane</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">➕ Register & Enqueue Vehicle</button>
+            </form>
+
+            <hr class="divider">
+
+            <button id="btnAdvanceSignal" class="btn btn-success btn-large">
+                🚦 Advance Traffic Signal Cycle (Dequeue)
+            </button>
+
+            <div class="search-box">
+                <h3>🔍 Search Vehicle Queue (Linear Search O(N))</h3>
+                <div class="search-input-group">
+                    <input type="text" id="searchPlateInput" placeholder="Enter License Plate...">
+                    <button id="btnSearch" class="btn btn-secondary">Search</button>
+                </div>
+                <div id="searchResult" class="search-result-box"></div>
+            </div>
+        </section>
+
+        <!-- Intersection Visualization -->
+        <section class="card intersection-visualizer">
+            <h2>🗺️ Real-Time Intersection Circular Queues</h2>
+            
+            <div class="intersection-layout">
+                <div class="lane-box lane-north" id="laneNorthBox">
+                    <div class="lane-header">NORTH LANE <span class="badge" id="northBadge">0/8</span></div>
+                    <div class="queue-buffer" id="northQueueBuffer"></div>
+                </div>
+
+                <div class="middle-row">
+                    <div class="lane-box lane-west" id="laneWestBox">
+                        <div class="lane-header">WEST LANE <span class="badge" id="westBadge">0/8</span></div>
+                        <div class="queue-buffer" id="westQueueBuffer"></div>
+                    </div>
+
+                    <div class="intersection-center" id="intersectionCenter">
+                        <div class="signal-indicator" id="centerSignalIndicator">NORTH GREEN</div>
+                        <div class="active-vehicle-spot" id="activeVehicleSpot">Intersection Clear</div>
+                    </div>
+
+                    <div class="lane-box lane-east" id="laneEastBox">
+                        <div class="lane-header">EAST LANE <span class="badge" id="eastBadge">0/8</span></div>
+                        <div class="queue-buffer" id="eastQueueBuffer"></div>
+                    </div>
+                </div>
+
+                <div class="lane-box lane-south" id="laneSouthBox">
+                    <div class="lane-header">SOUTH LANE <span class="badge" id="southBadge">0/8</span></div>
+                    <div class="queue-buffer" id="southQueueBuffer"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Emergency Priority Queue Panel -->
+        <section class="card emergency-panel">
+            <div class="panel-header-alert">
+                <h2>🚨 High-Priority Emergency Queue (Min-Heap Priority Queue)</h2>
+                <span class="pulsing-red-dot"></span>
+            </div>
+            <p class="subtitle">Vehicles in this queue automatically override standard signal rotation.</p>
+            <div id="emergencyQueueList" class="priority-list">
+                <p class="empty-msg">No active emergency vehicles in priority queue.</p>
+            </div>
+        </section>
+
+        <!-- Event Console Log -->
+        <section class="card log-panel">
+            <h2>📜 System Dispatch & Event Log</h2>
+            <div id="eventConsole" class="console-output"></div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>TraffiQ: Smart Traffic Signal & Emergency Vehicle Queue Management System | Data Structures Project</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
