@@ -80,3 +80,22 @@ The website uses JavaScript for browser-based simulation. The Java implementatio
 ## Conclusion
 
 TraffiQ demonstrates how Circular Queue and Priority Queue concepts can be applied to traffic management. It provides a simple simulation of lane management, signal rotation, and emergency vehicle prioritization.
+## Output Screenshots
+
+### Whole Website
+![Whole](Whole.png)
+
+### Dashboard
+![Dashboard](Dashboard.png)
+
+### Traffic in Queue
+![Traffic in queue](Traffic%20in%20queue.png)
+
+### Initial Stage
+![Initial stage](Initial%20stage.png)
+
+### Output 1
+![Output 1](Output%201.png)
+
+### Output 2
+![Output 2](Output%202.png)
