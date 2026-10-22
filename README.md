@@ -85,15 +85,6 @@ TraffiQ demonstrates how Circular Queue and Priority Queue concepts can be appli
 ### Whole Website
 ![Whole](Whole%20website.png)
 
-### Dashboard
-![Dashboard](Dashboard.png)
-
-### Traffic in Queue
-![Traffic in queue](Traffic%20in%20queue.png)
-
-### Initial Stage
-![Initial stage](Initial%20stage.png)
-
 ### Output 1
 ![Output 1](Output%201.png)
 
